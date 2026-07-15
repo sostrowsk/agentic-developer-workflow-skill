@@ -27,3 +27,7 @@ unter `$ADW_HOME` (Default `~/PycharmProjects/agentic-developer-workflow`).
 - `adw-skill/assets/config-template.yaml` — Vorlage für `.adw/config.yaml` im Ziel-Repo
 
 Paketieren (erzeugt `adw-skill.skill`, gitignored): `package_skill.py adw-skill .` aus dem skill-creator.
+
+## Lizenz
+
+MIT — siehe [LICENSE](LICENSE).
