@@ -12,6 +12,19 @@ Versions up to 0.1.2 were assigned retroactively from the push history.
 
 Deutsche Fassung: [CHANGELOG.de.md](CHANGELOG.de.md)
 
+## [0.2.1] — 2026-08-03
+
+### Changed
+- Config reference: three field-tested pitfalls documented — Poetry venvs
+  in lane worktrees (wire absolute venv binaries into gates), `staging_job`
+  vs. GitLab bridge/trigger jobs (omit `staging_job`, the pipeline status
+  covers it), gitignored `.env` missing in worktrees (projects must fall
+  back to CI defaults).
+- Troubleshooting: limits updated to review-loop policy v2 (5 review
+  rounds, descending severity floor, findings memory) and the full list of
+  what ends up in `followups.md`. Completes references that SKILL.md 0.2.0
+  already pointed to.
+
 ## [0.2.0] — 2026-08-03
 
 ### Changed
@@ -48,6 +61,7 @@ Initial release.
   approve, exit-code handling), config reference and troubleshooting under
   `references/`, packaged `adw-skill.skill`.
 
+[0.2.1]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.1.0...v0.1.1

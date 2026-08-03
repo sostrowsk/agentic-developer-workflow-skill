@@ -55,3 +55,20 @@ ci:                            # optional; Defaults siehe unten
 - Die Config ist für alle ADW-Agenten unveränderlich — Änderungen macht nur
   der Mensch, per normalem Commit. `base_branch`-Änderungen wirken erst auf
   NEUE Runs (laufende Runs pinnen ihre Basis beim Start).
+- **Poetry-Projekte: venv-Binaries direkt verdrahten.** Lanes laufen in
+  git-Worktrees; dort legt `poetry run` ein NEUES, leeres venv an (Poetry
+  keyed venvs am Projektpfad), und alle Gates scheitern an fehlenden
+  Dependencies. Stattdessen den venv-Pfad ermitteln
+  (`poetry env info -p` im Haupt-Checkout) und die Binaries absolut in die
+  Gate-Kommandos schreiben, z. B.
+  `/home/<user>/.cache/pypoetry/virtualenvs/<env>/bin/python manage.py test`.
+- **`staging_job` sieht keine Bridge-Jobs.** ADW prüft den Job über den
+  GitLab-`/jobs`-Endpoint; Trigger-/Bridge-Jobs (Downstream-Deploys, z. B.
+  docker-host-Trigger) erscheinen dort nicht — ein als Bridge deployter
+  Staging-Job führt zu „Staging-Job existiert nicht in der Pipeline". In dem
+  Fall `staging_job` weglassen; der Pipeline-Gesamtstatus deckt den
+  Bridge-Status mit ab.
+- **Gitignorierte `.env` fehlt im Worktree.** Gates laufen ohne die lokale
+  `.env` — das Projekt muss (wie in CI) auf saubere Defaults zurückfallen
+  (z. B. SQLite). Tut es das nicht, gehört ein committetes Test-Env-File ins
+  Repo, nicht die `.env` in den Worktree.

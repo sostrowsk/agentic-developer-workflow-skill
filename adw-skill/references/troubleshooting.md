@@ -15,7 +15,7 @@
 |---|---|---|
 | Gate-Iterationen erreicht (10) / Circuit-Breaker | Build-Agent kommt an den Gates nicht vorbei bzw. dreht sich im Kreis | Gate-Output im Report lesen; oft widersprechen sich Issue und Gates oder ein Test ist flaky. Ursache beheben, neuen Run starten |
 | Integrations-Merge fehlgeschlagen | Lanes haben dieselben Dateien widersprüchlich geändert | Konflikt manuell sichten; Kontrakt/Plan war zu unscharf — Issue präziser schneiden oder Single-Lane fahren |
-| E2E-/Review-Runden erreicht (10) / Fix-Zyklen (3) | Grundsatzproblem, das Fixes nicht lösen | Findings im Report bewerten; ggf. Issue-Scope reduzieren |
+| E2E-Runden erreicht (10) / Review-Runden erreicht (5) / Fix-Zyklen (3) | Grundsatzproblem, das Fixes nicht lösen | Findings im Report bewerten; ggf. Issue-Scope reduzieren. Am Review-Cap eskalieren nur noch offene P1 (ab Runde 3 zählen nur P1; P2/P3 stehen in `followups.md`/Known Limitations) |
 | „Review/Triage/Log-Analyst unlesbar" | Reviewer hat das Findings-JSON-Schema verletzt | Einfach neuen Run starten (transient); bei Wiederholung Modell-/CLI-Versionen prüfen |
 | „HEAD hat sich bewegt" / „Agent hat selbst committet" / Branch-Wechsel | Fremdeingriff in einen Lane-Worktree | Nie manuell in `.adw/runs/<id>/trees/…` arbeiten; Worktree-Zustand klären, neuen Run starten |
 | „ci.provider … setzen" | Hosting nicht aus origin-URL erkennbar | `ci.provider: gitlab|github` in `.adw/config.yaml` setzen |
@@ -39,11 +39,18 @@
 
 ## Wissenswertes für die Analyse
 
-- Limits: 10 Gate-Iterationen je Task, 10 E2E-/Review-Runden, 3 Fix-Zyklen je
-  Lane, 1 CI-Re-Entry. Circuit-Breaker: zweimal exakt derselbe Fehler →
+- Limits: 10 Gate-Iterationen je Task, 10 E2E-Runden, 5 Codex-Review-Runden
+  (gilt für Authoring-Loops UND Code-Review), 3 Fix-Zyklen je Lane,
+  1 CI-Re-Entry. Circuit-Breaker: zweimal exakt derselbe Fehler →
   sofortige Eskalation. Ein Resume verschafft KEINE zusätzlichen Versuche.
-- `followups.md` im Run-Ordner enthält scope_gap-Findings des finalen Reviews —
-  das sind vorgeschlagene Follow-up-Issues, keine Fehler.
+- Review-Loop-Policy (absteigende Severity-Schwelle): Runde 1 fixt alle
+  Findings, Runde 2 nur P1+P2, ab Runde 3 nur P1 — darunter liegende Findings
+  landen als Follow-ups/Known Limitations. Codex erhält ab Runde 2 die
+  Vorrunden-Findings inkl. Disposition, meldet also bereits behandelte oder
+  bewusst abgewiesene Punkte nicht erneut.
+- `followups.md` im Run-Ordner enthält scope_gap-Findings des finalen Reviews,
+  von Fix-Läufen als unactionable vertagte P3s sowie unter die Runden-Schwelle
+  gefallene P2/P3 — das sind vorgeschlagene Follow-up-Issues, keine Fehler.
 - Dry-Run-Artefakte (`adw_dry_run_*.md`, Branches `adw/<id>/…`) sind lokal und
   können gefahrlos gelöscht werden.
 - Alle Run-Daten liegen gitignored unter `.adw/runs/<run_id>/`
