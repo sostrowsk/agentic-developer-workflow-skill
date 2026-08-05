@@ -15,7 +15,8 @@ lanes:                         # Pflicht: mindestens eine Lane (backend|frontend
     gates:                     # Pflicht je Lane: >= 1 Gate
       - {name: black,  cmd: "black --check .",      timeout: 120}
       - {name: isort,  cmd: "isort --check-only .", timeout: 120}
-      - {name: pytest, cmd: "pytest -x -q",         timeout: 1800}
+      # tdd: true (optional, Default false) = RED-Beweis-Gate
+      - {name: pytest, cmd: "pytest -x -q",         timeout: 1800, tdd: true}
   frontend:                    # optional; --parallel verlangt BEIDE Lanes
     gates:
       - {name: eslint, cmd: "npm run lint",         timeout: 300}
@@ -39,6 +40,17 @@ ci:                            # optional; Defaults siehe unten
   das erste rote Gate stoppt (fail fast).
 - **Timeouts sind Pflicht** (Sekunden, > 0) — jedes Gate-Kommando läuft mit
   hartem Subprocess-Timeout.
+- **`tdd: true` markiert die RED-Beweis-Gates** (optional, Default false).
+  Ist in einer Lane mindestens ein Gate markiert, läuft ihr Initial-Build
+  zweistufig: Der Build-Agent schreibt zuerst NUR die Tests, danach führt der
+  Orchestrator genau die markierten Gates aus. Mindestens eines muss rot sein
+  — erst dieser Beweis gibt die Implementierung frei (dieselbe Agent-Session,
+  der RED-Check verbraucht keine Gate-Iteration). Sind alle grün, eskaliert
+  der Run. **Empfehlung: genau das Test-Gate markieren** — Linter/Formatter
+  beweisen an reinen Tests nichts. Ohne markiertes Gate bleibt der Build
+  einstufig wie bisher; Fix-Läufe (Review/E2E) durchlaufen die RED-Stufe nie.
+  Die RED-Tests dürfen danach nicht mehr verschwinden: Gates gelten nur als
+  grün, solange die Dateien des Beweises noch existieren.
 - **Ports:** Gates bekommen `BACKEND_PORT`/`FRONTEND_PORT` als Env-Variablen
   (deterministisch je Run/Lane) — für Dev-Server in Gate-/E2E-Kommandos nutzen.
 - **`ci.provider`:** Ohne Angabe erkennt ADW das Hosting am Hostnamen der

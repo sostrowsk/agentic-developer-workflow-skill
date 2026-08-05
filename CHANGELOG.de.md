@@ -13,6 +13,21 @@ Push-Historie vergeben.
 
 English edition: [CHANGELOG.md](CHANGELOG.md)
 
+## [0.2.2] — Unreleased
+
+### Changed
+- Config-Referenz: das optionale Gate-Feld `tdd: true` dokumentiert — es
+  markiert die Gates, die im Initial-Build einer Lane den deterministischen
+  RED-Beweis liefern (reiner Test-Lauf des Agents, der Orchestrator führt
+  genau die markierten Gates aus, mindestens eines muss rot sein, bevor
+  implementiert wird). Empfehlung: das Test-Gate markieren; ohne markiertes
+  Gate bleibt der Build einstufig. Schema-Beispiel und
+  `assets/config-template.yaml` tragen das Flag an den Test-Gates.
+- Troubleshooting: neue Eskalations-Zeile „Tests nach reinem Test-Lauf grün
+  — RED nicht bestätigt" (Ursache: Die Tests decken das geforderte
+  Verhalten nicht ab oder es existiert bereits; Abhilfe: Issue/Spec
+  schärfen, neuen Run starten — es gibt keinen Retry-Loop).
+
 ## [0.2.1] — 2026-08-03
 
 ### Changed
@@ -61,6 +76,7 @@ Erstes Release.
   run/resume/approve, Exit-Code-Handling), Config-Referenz und
   Troubleshooting unter `references/`, paketiertes `adw-skill.skill`.
 
+[0.2.2]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.2.1...HEAD
 [0.2.1]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.1.1...v0.1.2

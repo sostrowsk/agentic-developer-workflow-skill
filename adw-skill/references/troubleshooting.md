@@ -14,6 +14,7 @@
 | Grund im Report | Bedeutung | Reaktion |
 |---|---|---|
 | Gate-Iterationen erreicht (10) / Circuit-Breaker | Build-Agent kommt an den Gates nicht vorbei bzw. dreht sich im Kreis | Gate-Output im Report lesen; oft widersprechen sich Issue und Gates oder ein Test ist flaky. Ursache beheben, neuen Run starten |
+| „Tests nach reinem Test-Lauf grün — RED nicht bestätigt" | Lane mit `tdd: true`-Gate: die zuerst geschriebenen Tests decken das geforderte Verhalten nicht ab, oder das Verhalten existiert bereits | Kein Retry-Loop, kein Resume-Fall. Issue/Spec schärfen (was genau soll neu sein?) bzw. klären, ob das Feature schon da ist — dann neuen Run starten |
 | Integrations-Merge fehlgeschlagen | Lanes haben dieselben Dateien widersprüchlich geändert | Konflikt manuell sichten; Kontrakt/Plan war zu unscharf — Issue präziser schneiden oder Single-Lane fahren |
 | E2E-Runden erreicht (10) / Review-Runden erreicht (5) / Fix-Zyklen (3) | Grundsatzproblem, das Fixes nicht lösen | Findings im Report bewerten; ggf. Issue-Scope reduzieren. Am Review-Cap eskalieren nur noch offene P1 (ab Runde 3 zählen nur P1; P2/P3 stehen in `followups.md`/Known Limitations) |
 | „Review/Triage/Log-Analyst unlesbar" | Reviewer hat das Findings-JSON-Schema verletzt | Einfach neuen Run starten (transient); bei Wiederholung Modell-/CLI-Versionen prüfen |
