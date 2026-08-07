@@ -12,7 +12,7 @@ Versions up to 0.1.2 were assigned retroactively from the push history.
 
 Deutsche Fassung: [CHANGELOG.de.md](CHANGELOG.de.md)
 
-## [0.2.2] — Unreleased
+## [0.2.2] — 2026-08-07
 
 ### Changed
 - Config reference: the optional Gate field `tdd: true` documented — it
@@ -76,7 +76,7 @@ Initial release.
   approve, exit-code handling), config reference and troubleshooting under
   `references/`, packaged `adw-skill.skill`.
 
-[0.2.2]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.2.1...HEAD
+[0.2.2]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/sostrowsk/agentic-developer-workflow-skill/compare/v0.1.1...v0.1.2
